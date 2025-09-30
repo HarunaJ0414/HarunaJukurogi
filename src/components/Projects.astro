@@ -7,7 +7,7 @@ interface Props {
   projects: ProjectProps[];
 }
 
-const { projects } = Astro.props;
+const { projects } = Astro.props as Props;
 ---
 
 <Section text="Featured Projects" href="projects">
@@ -20,6 +20,7 @@ const { projects } = Astro.props;
           class="sticky mb-12 rounded-2xl border border-neutral/20 bg-black"
         >
           <div class="bg-difu relative z-[1] grid h-[580px] w-full grid-rows-2 rounded-2xl bg-[#1c232d]/85 before:absolute before:inset-0 before:z-[-1] before:rounded-2xl before:bg-[url(/raja.png)] before:bg-[length:128px] before:bg-repeat before:opacity-[5%] before:content-[''] sm:grid-cols-2 sm:grid-rows-1 md:h-96">
+            {/* Text column */}
             <div class="px-6 pt-12">
               <h3 class="mb-5 font-serif text-3xl font-medium text-primary">
                 {name}
@@ -29,6 +30,7 @@ const { projects } = Astro.props;
                 <a
                   href={linkSource}
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="after:relative after:bottom-[-5px] after:content-[url(/external.svg)] hover:underline"
                 >
                   Source
@@ -36,20 +38,33 @@ const { projects } = Astro.props;
                 <a
                   href={linkPreview}
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="after:relative after:bottom-[-5px] after:content-[url(/external.svg)] hover:underline"
                 >
                   Preview
                 </a>
               </div>
             </div>
+
+            {/* Image column (fixed 16:9, cover, left-biased crop, with fallback) */}
             <div class="flex items-end justify-end overflow-hidden">
-              <Image
-                class="h-full w-[95%] rounded-ss-xl rounded-ee-2xl object-none object-left-top sm:h-[85%] sm:w-full"
-                src={image}
-                alt={name}
-                width="736"
-                height="483"
-              />
+              <div class="relative w-full overflow-hidden rounded-ss-xl rounded-ee-2xl" style="aspect-ratio:16/9;">
+                {image ? (
+                  <Image
+                    src={image}
+                    alt={name}
+                    width="1280"
+                    height="720"
+                    class="absolute inset-0 h-full w-full object-cover object-left"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div class="absolute inset-0 grid place-items-center bg-neutral-900/40">
+                    <span class="text-sm text-neutral-400">No image</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
