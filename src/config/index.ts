@@ -85,7 +85,7 @@ export const SITE_CONTENT: SiteContent = {
         "Event-study on equity indices: targeted countries vs. U.S. using announcement-window returns, abnormal returns, and robustness checks.",
       linkPreview: "/",
       linkSource: "https://github.com/HarunaJ0414/trumptariffimpact",
-      image: "/project-tariff.png",
+      image: "/WallStPic.jpg",
     },
     {
       name: "Portfolio Optimizer (Python)",
